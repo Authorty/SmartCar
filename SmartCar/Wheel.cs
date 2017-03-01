@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System;
 using Windows.Devices.Gpio;
 
 namespace SmartCar
@@ -33,13 +30,21 @@ namespace SmartCar
 
         public Wheel(enmWheel name, int highPin, int lowPin)
         {
-            Name = name;
+            try
+            {
+                Name = name;
 
-            _highPin = controller.OpenPin(highPin);
-            _lowPin = controller.OpenPin(lowPin);
+                _highPin = controller.OpenPin(highPin);
+                _lowPin = controller.OpenPin(lowPin);
 
-            _highPin.SetDriveMode(GpioPinDriveMode.Output);
-            _lowPin.SetDriveMode(GpioPinDriveMode.Output);
+                _highPin.SetDriveMode(GpioPinDriveMode.Output);
+                _lowPin.SetDriveMode(GpioPinDriveMode.Output);
+            }
+            catch (Exception e)
+            {
+                var x = e.ToString();
+                throw;
+            }
         }
 
         public void Trigger(Direction direction, float speed)

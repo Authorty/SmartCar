@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Gpio;
 
@@ -21,20 +20,30 @@ namespace SmartCar
         //init four wheels
         private static List<Wheel> wheels = new List<Wheel>
         {
-            new Wheel(enmWheel.TopLeft, 22, 27),
-            new Wheel(enmWheel.TopRight, 12, 13),
-            new Wheel(enmWheel.BottomLeft, 24, 23),
-            new Wheel(enmWheel.BottomRight, 16, 26)
+            //new Wheel(enmWheel.TopLeft, 11, 12),
+            //new Wheel(enmWheel.TopRight, 13, 15),
+            new Wheel(enmWheel.BottomLeft, 17, 18),
+            new Wheel(enmWheel.BottomRight, 27, 22)
         };
 
         public bool FowardBackword(Direction driection)
         {
-            foreach (Wheel wheel in wheels)
+            try
             {
-                wheel.Trigger(driection, 1);
-            }
+                foreach (Wheel wheel in wheels)
+                {
+                    wheel.Trigger(driection, 1);
+                }
+                //Wheel test = new Wheel(enmWheel.BottomRight, 27,22);
+                //test.Trigger(driection, 1);
 
-            return true;
+                return true;
+            }
+            catch (Exception e)
+            {
+                var x = e.ToString();
+                throw;
+            }
         }
 
         public void Stop()
